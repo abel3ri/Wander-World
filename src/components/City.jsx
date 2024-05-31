@@ -1,4 +1,6 @@
+import { useParams } from "react-router-dom";
 import styles from "./City.module.css";
+// import ButtonBack from "./Butt"
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat("en", {
@@ -8,17 +10,18 @@ const formatDate = (date) =>
     weekday: "long",
   }).format(new Date(date));
 
-function City() {
+function City({ cities }) {
+  const { id } = useParams();
+
+  const [city] = cities.filter((city) => {
+    return city.id == id;
+  });
+
   // TEMP DATA
-  const currentCity = {
-    cityName: "Lisbon",
-    emoji: "🇵🇹",
-    date: "2027-10-31T15:59:59.138Z",
-    notes: "My favorite city so far!",
-  };
 
-  const { cityName, emoji, date, notes } = currentCity;
+  const { cityName, emoji, date, notes } = city;
 
+  // return <h1>City</h1>;
   return (
     <div className={styles.city}>
       <div className={styles.row}>
@@ -51,9 +54,7 @@ function City() {
         </a>
       </div>
 
-      <div>
-        <ButtonBack />
-      </div>
+      <div>{/* <ButtonBack /> */}</div>
     </div>
   );
 }
